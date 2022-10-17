@@ -206,7 +206,7 @@ abstract class CodersTheme{
         if( has_nav_menu( $menu ) ){
             print wp_nav_menu(array(
                 'theme_location' => $menu,
-                'menu_class' => is_array($class) ? implode(' ', $class) : $class,
+                'menu_class' => 'menu ' . (is_array($class) ? implode(' ', $class) : $class),
                 'container' => FALSE,
                 'echo' => FALSE));
         }
@@ -258,9 +258,7 @@ abstract class CodersTheme{
      * @return String
      */
     private final function blockClass( $block ){
-        $blocks = $this->themeClasses();
-        $classes = array_key_exists($block, $blocks) ? $blocks[$block] : array($block);
-        return is_array($classes) ? ' ' . implode(' ',$classes) : $classes;
+        return implode(' ', $this->themeClasses()) . ' ' . $block;
     }
     /**
      * Sidebar structure
@@ -311,16 +309,17 @@ abstract class CodersTheme{
         return $this;
     }
     /**
-     * Inicio del bloque
+     * @param string $block
+     * @param string $class
      * @return \CODERS\Theme
      */
-    private final function openBlock( $block ){
+    private final function openBlock( $block , $class = '' ){
         $show_id = $this->hasId($block) ? sprintf('id="%s"',$block) : '';
         //open block with ID
         printf('<%s %s class="%s">',
                 $this->blockTag( $block ),
                 $show_id, 
-                $this->blockClass( $block ) );
+                $this->blockClass( $block . ' ' . $class ) );
         
         if( $this->hasWrapper($block) ){
             //apertura del wrapper
@@ -403,8 +402,9 @@ abstract class CodersTheme{
      */
     private final function renderTheme( $block_id , $content ){
         //for named arrays
-        if(is_string($block_id)){
-            $this->openBlock( $block_id );
+        if(is_string($block_id) && $block_id !== '__class' ){
+            $class = is_array($content) && array_key_exists('__class', $content) ? $content['__class'] : '';
+            $this->openBlock( $block_id , $class );
             if( is_string( $content ) ){
                 $this->renderBlock( $content );
             }
