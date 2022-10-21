@@ -319,7 +319,7 @@ abstract class CodersTheme{
         printf('<%s %s class="%s">',
                 $this->blockTag( $block ),
                 $show_id, 
-                $this->blockClass( $block . ' ' . $class ) );
+                $this->blockClass( $show_id ? $class : $block . ' ' . $class ) );
         
         if( $this->hasWrapper($block) ){
             //apertura del wrapper
