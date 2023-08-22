@@ -53,7 +53,7 @@ abstract class CodersTheme{
         
         if(is_null(self::$_instance)){
             $this->register()->setupCustomizer();
-            self::$_instance = $this;            
+            self::$_instance = $this;
         }
     }
     
@@ -760,10 +760,42 @@ abstract class CodersTheme{
         return self::$_instance->$feature;
     }
     /**
+     * @param string $uri
      * @return CodersTheme
      */
-    public static function instance(  ){
-        return self::$_instance;
+    private static final function create( $uri = '' ){
+            $root = explode('/', $uri );
+            $name = $root[count($root)-1];
+            $path = sprintf('%s/%s.theme.php',$uri,$name);
+            $class = sprintf('\%sTheme', ucfirst( $name) );
+            if(file_exists($path)){
+                require_once $path;
+                if(class_exists($class) && is_subclass_of($class, \CodersTheme::class,true)){
+                    return new $class();
+                }
+                else{
+                    printf('<p>Invalid Theme Instance %s</p>',$class);
+                }
+            }
+            else{
+                printf('<p>Invalid Theme Path %s</p>',$path);
+            }
+
+            return null;
+    }
+    /**
+     * Theme loaded and ready
+     * @return Boolean
+     */
+    public static final function ready(){
+        return !is_null(self::$_instance);
+    }
+    /**
+     * @param string $uri
+     * @return \CodersTheme
+     */
+    public static final function instance( $uri = '' ){
+        return is_null( self::$_instance ) && strlen($uri) ? self::create($uri) : self::$_instance;
     }
 }
 
