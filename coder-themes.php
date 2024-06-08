@@ -23,6 +23,7 @@ abstract class CodersTheme{
     private $_priority = 8;
     
     private $_elements = array(
+        //
     );
     
     /**
@@ -50,6 +51,14 @@ abstract class CodersTheme{
      * 
      */
     public function __construct() {
+    
+        $this->registerThemeCustomizers()
+                ->registerThemeSupport()
+                ->registerThemeScripts()
+                ->registerThemeSidebars()
+                ->registerThemeMenus()
+                ->registerThemeSettings()
+                ->registerThemeBlocks();
         
         if(is_null(self::$_instance)){
             $this->register()->setupCustomizer();
@@ -62,24 +71,22 @@ abstract class CodersTheme{
      * @return String
      */
     public final function __get( $name ){
-        
-        if(substr($name, 0, 3) === 'id_'){
-            //si es un id retorna booleano
-            $this->hasId($name);
+        switch(TRUE){
+            case preg_match('/^id_/', $name):
+                //si es un id retorna booleano
+                return $this->hasId($name);
+            case preg_match('/^tag_/', $name):
+                //si es un tag, retorna su nombre
+                return $this->blockTag( $name );
+            case preg_match('/^wrap_/', $name):
+                //indica si contiene un wrapper
+                return $this->hasWrapper($name) ? implode(' ', $this->wrap()) : '';
+            case array_key_exists($name, $this->_elements):
+                //var_dump($this->_elements[$name]['value']);
+                return $this->_elements[$name]['value'];
+            default:
+                return $this->mod($name,'');
         }
-        elseif(substr($name, 0,4) === 'tag_' ){
-            //si es un tag, retorna su nombre
-            return $this->blockTag( $name );
-        }
-        elseif(substr($name, 0,5) === 'wrap_' ){
-            //indica si contiene un wrapper
-            return $this->hasWrapper($name) ? implode(' ', $this->wrap()) : '';
-        }
-        elseif(array_key_exists($name, $this->_elements)){
-            //var_dump($this->_elements[$name]['value']);
-            return $this->_elements[$name]['value'];
-        }
-        return $this->mod($name,'');
     }
     
     /**
@@ -118,8 +125,6 @@ abstract class CodersTheme{
     protected static final function __matchUrl( $input ){
         return preg_match('/^(http|https):\/\//',$input) > 0;
     }
-    
-    
     /**
      * @param string $part
      */
@@ -132,7 +137,67 @@ abstract class CodersTheme{
     public static final function templatePath( $part ){
         return sprintf('%s/html/%s.php', get_stylesheet_directory(),$part);
     }
-
+    
+    
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeCustomizers() {
+        
+        return $this;
+    }
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeSupport() {
+        
+        return $this;
+    }
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeSidebars() {
+        
+        return $this;
+    }
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeMenus() {
+        
+        return $this;
+    }
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeScripts() {
+        
+        return $this;
+    }
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeSettings() {
+        
+        return $this;
+    }
+    /**
+     * 
+     * @return \CodersTheme
+     */
+    protected function registerThemeBlocks() {
+        
+        return $this;
+    }
+    
+    
+    
     /**
      * Override to define the theme structure
      * 
@@ -432,9 +497,6 @@ abstract class CodersTheme{
                 ->closeTheme();
     }
     
-
-
-
     /**
      * @param String $type
      * @return Number
@@ -685,7 +747,6 @@ abstract class CodersTheme{
         return $this;
     }
     /**
-     * 
      * @return \CodersTheme
      */
     private final function register(){
@@ -756,8 +817,15 @@ abstract class CodersTheme{
      * @param string $feature
      * @return string
      */
-    public static final function feature( $feature ){
-        return self::$_instance->$feature;
+    //public static final function feature( $feature ){
+    //    return self::$_instance->$feature;
+    //}
+    /**
+     * @param string $feature
+     * @return string
+     */
+    public final function feature( $feature ){
+        return $this->$feature;
     }
     /**
      * @return CodersTheme
