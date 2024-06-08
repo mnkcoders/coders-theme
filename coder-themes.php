@@ -9,11 +9,11 @@
  * License: GPLv2 or later
  * Text Domain: coder_themes
  * Domain Path: lang
- * Class: CodersTheme
+ * Class: CoderThemes
  * 
  * @author Coder01 <mnkcoders@gmail.com>
  ******************************************************************************/
-abstract class CodersTheme{
+abstract class CoderThemes{
     
     const TYPE_SELECT = 'select';
     const TYPE_TEXT = 'text';
@@ -27,7 +27,7 @@ abstract class CodersTheme{
     );
     
     /**
-     * @var \CodersTheme
+     * @var \CoderThemes
      */
     private static $_instance = null;
     
@@ -141,7 +141,7 @@ abstract class CodersTheme{
     
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeCustomizers() {
         
@@ -149,7 +149,7 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeSupport() {
         
@@ -157,7 +157,7 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeSidebars() {
         
@@ -165,7 +165,7 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeMenus() {
         
@@ -173,7 +173,7 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeScripts() {
         
@@ -181,7 +181,7 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeSettings() {
         
@@ -189,7 +189,7 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function registerThemeBlocks() {
         
@@ -265,7 +265,7 @@ abstract class CodersTheme{
     }
     /**
      * @param string $menu
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     private final function showNavMenu($menu,$class = '') {
         if( has_nav_menu( $menu ) ){
@@ -279,7 +279,7 @@ abstract class CodersTheme{
     }
     /**
      * @param string $sidebar
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected final function showSidebar( $sidebar ){
         dynamic_sidebar($sidebar);
@@ -366,7 +366,7 @@ abstract class CodersTheme{
         return $this;
     }
     /**
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function closeTheme(){
         wp_footer();
@@ -552,7 +552,7 @@ abstract class CodersTheme{
      * @param string $name
      * @param string $type
      * @param mixed $value
-     * @return CodersTheme
+     * @return CoderThemes
      */
     protected final function element( $name , $type , $value = FALSE ){
         if( !array_key_exists($name, $this->_elements)){
@@ -581,7 +581,7 @@ abstract class CodersTheme{
     /**
      * @param string $feature
      * @param array $settings
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function themeSupport( $feature , array $settings = array( ) ){
         $this->_contents['theme_support'][$feature] = $settings;
@@ -591,7 +591,7 @@ abstract class CodersTheme{
      * @param string $sidebar
      * @param string $name
      * @param array $settings
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function sidebar( $sidebar , $name = '' , array $settings = array( ) ){
         if( !array_key_exists('id', $settings)){
@@ -612,7 +612,7 @@ abstract class CodersTheme{
     /**
      * @param string $menu
      * @param string $location
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function menu( $menu , $location ){
         $this->_contents['menu'][$menu] = $location;
@@ -621,7 +621,7 @@ abstract class CodersTheme{
     /**
      * @param string $style_id
      * @param array $url
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function style( $style_id , $url ){
         $this->_contents['style'][$style_id] = $url;
@@ -630,7 +630,7 @@ abstract class CodersTheme{
     /**
      * @param string $script_id
      * @param array $url
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function script( $script_id , $url = '' ){
         $this->_contents['script'][$script_id] = $url;
@@ -639,7 +639,7 @@ abstract class CodersTheme{
     /**
      * @param string $script_id
      * @param array $data
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function localize( $script_id , $data = array( ) ){
         if(array_key_exists($script_id, $this->_contents['script'])){
@@ -671,7 +671,7 @@ abstract class CodersTheme{
     /**
      * @param string $section_id
      * @param array $settings
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function customSection( $section_id , array $settings = array( ) ){
         $this->_contents['customizer_section'][$section_id] = $settings;
@@ -686,7 +686,7 @@ abstract class CodersTheme{
     /**
      * @param string $control_id
      * @param array $contents
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function customControl( $control_id , $section , $setting , $type = 'text', array $contents = array( ) ){
         $contents['settings'] = $setting;
@@ -712,7 +712,7 @@ abstract class CodersTheme{
     /**
      * @param string $setting_id
      * @param array $contents
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     protected function customSetting( $setting_id , array $contents = array( ) ){
         $this->_contents['settings'][$setting_id] = $contents;
@@ -720,21 +720,21 @@ abstract class CodersTheme{
     }
     /**
      * 
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     private final function setupCustomizer(){
 
         add_action('customize_register', function(WP_Customize_Manager $wp_customize) {
             
-            foreach( CodersTheme::instance()->list('settings') as $id => $contents ){
+            foreach( CoderThemes::instance()->list('settings') as $id => $contents ){
                 $wp_customize->add_setting($id, $contents);
             }
             
-            foreach( CodersTheme::instance()->list('customizer_section') as $section_id => $settings ){
+            foreach( CoderThemes::instance()->list('customizer_section') as $section_id => $settings ){
                 $wp_customize->add_section($section_id,$settings);
             }
             
-            foreach( CodersTheme::instance()->list('customizer_control') as $control_id => $settings ){
+            foreach( CoderThemes::instance()->list('customizer_control') as $control_id => $settings ){
                 
                 if(array_key_exists('type', $settings) && $settings['type'] === 'select' ){
                     $settings['choices'] = $this->setting($control_id);
@@ -747,7 +747,7 @@ abstract class CodersTheme{
         return $this;
     }
     /**
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     private final function register(){
         
@@ -777,9 +777,9 @@ abstract class CodersTheme{
                 }
             });
             
-            register_nav_menus( CodersTheme::instance()->list('menu') );
+            register_nav_menus( CoderThemes::instance()->list('menu') );
             
-            foreach( CodersTheme::instance()->list('sidebar') as $settings ){
+            foreach( CoderThemes::instance()->list('sidebar') as $settings ){
                 register_sidebar($settings);
             }
         });
@@ -829,7 +829,7 @@ abstract class CodersTheme{
     }
     /**
      * @param string $uri
-     * @return CodersTheme
+     * @return CoderThemes
      */
     private static final function create( $uri = '' ){
             $root = explode('/', $uri );
@@ -838,7 +838,7 @@ abstract class CodersTheme{
             $class = sprintf('\%sTheme', ucfirst( $name) );
             if(file_exists($path)){
                 require_once $path;
-                if(class_exists($class) && is_subclass_of($class, \CodersTheme::class,true)){
+                if(class_exists($class) && is_subclass_of($class, \CoderThemes::class,true)){
                     return new $class();
                 }
                 else{
@@ -860,7 +860,7 @@ abstract class CodersTheme{
     }
     /**
      * @param string $uri
-     * @return \CodersTheme
+     * @return \CoderThemes
      */
     public static final function instance( $uri = '' ){
         return is_null( self::$_instance ) && strlen($uri) ? self::create($uri) : self::$_instance;
